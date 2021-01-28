@@ -1,0 +1,21 @@
+version: '3.8'
+
+services:
+  db:
+    image: postgres:latest
+    restart: always
+    ports:
+      - 5432:5432
+    environment:
+      POSTGRES_PASSWORD: rifandani
+      POSTGRES_USER: rifandani #default postgres
+      POSTGRES_DB: webapp_dev #default POSTGRES_USER value
+
+      # define another location - like a subdirectory - for the database files
+      # PGDATA: /custom/mount:/var/lib/postgresql/data #default /var/lib/postgresql/data
+
+  adminer:
+    image: adminer:latest
+    restart: always
+    ports:
+      - 8080:8080

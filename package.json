@@ -1,0 +1,42 @@
+{
+  "name": "typescript-express-stack",
+  "version": "1.0.0",
+  "main": "src/index.ts",
+  "license": "MIT",
+  "scripts": {
+    "build": "rimraf dist && npx tsc",
+    "db:console": "docker-compose exec postgres psql -h localhost -U postgres -d webapp_dev",
+    "db:migrate": "npx prisma migrate dev --preview-feature",
+    "db:seed": "npx prisma db seed --preview-feature",
+    "dev": "node -r ts-node/register --inspect=0.0.0.0 src/index.ts",
+    "devmon": "nodemon --watch 'src/**/*.ts' --exec \"npx ts-node\" src/index.ts",
+    "docker:db:migrate": "docker-compose run web npm run db:migrate",
+    "rebuild:web": "docker-compose build web && docker-compose rm -fs web && docker-compose up -d",
+    "start": "node dist/index.js"
+  },
+  "dependencies": {
+    "@prisma/client": "^2.15.0",
+    "cors": "^2.8.5",
+    "express": "^4.17.1",
+    "faker": "^5.2.0",
+    "helmet": "^4.4.1",
+    "morgan": "^1.10.0",
+    "pg": "^8.5.1"
+  },
+  "devDependencies": {
+    "@prisma/cli": "2.15.0",
+    "@tsconfig/node14": "^1.0.0",
+    "@types/cors": "^2.8.9",
+    "@types/express": "^4.17.11",
+    "@types/faker": "^5.1.5",
+    "@types/morgan": "^1.9.2",
+    "@types/node": "^14.14.22",
+    "@typescript-eslint/eslint-plugin": "^4.14.1",
+    "@typescript-eslint/parser": "^4.14.1",
+    "eslint": "^7.18.0",
+    "nodemon": "^2.0.7",
+    "rimraf": "^3.0.2",
+    "ts-node": "^9.1.1",
+    "typescript": "^4.1.3"
+  }
+}

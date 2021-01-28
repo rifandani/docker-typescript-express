@@ -1,0 +1,26 @@
+services:
+  postgres:
+    image: postgres:13.1-alpine
+    restart: always
+    ports:
+      - 5432:5432 # enables connecting locally via psql
+    environment:
+      POSTGRES_DB: webapp_dev
+      POSTGRES_USER: rifandani
+      POSTGRES_HOST_AUTH_METHOD: trust # tanpa password
+
+  web:
+    build: .
+    depends_on:
+      - postgres
+    ports:
+      - 8000:8000
+      - 9229:9229
+    volumes:
+      - .:/usr/src/app
+      - /usr/src/app/node_modules
+    command: npm run dev
+    environment:
+      # DATABASE_URL: postgres://postgres@postgres/webapp_dev
+      DATABASE_URL: postgresql://rifandani@postgres:5432/webapp_dev?schema=public
+      PORT: 8000
